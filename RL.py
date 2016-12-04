@@ -163,10 +163,21 @@ def trainGraph(inp, out, sess):
         inp_t = inp_t1
         t = t+1
 
-        #print our where wer are after saving where we are
+        #save a checkpoint every so often
         if t % 10000 == 0:
-            saver.save(sess, './' + 'pong' + '-dqn', global_step = t)
+            saver.save(sess, "./tmp/model.ckpt")
+            
+        #load checkpoint if just starting if checkpoint exists
+        if t == 1:
+            if not os.path.isdir('./tmp'):
+                os.makedirs('./tmp')
+            if os.path.isfile("./tmp/checkpoint"):
+                sess = tf.Session()
+                # Restore variables from disk.
+                saver.restore(sess, "./tmp/model.ckpt")
+                print("Model restored.")
 
+        #print our where wer are after saving where we are        
         print("TIMESTEP", t, "/ EPSILON", epsilon, "/ ACTION", maxIndex, "/ REWARD", reward_t, "/ Q_MAX %e" % np.max(out_t))
 
 
