@@ -172,10 +172,9 @@ def trainGraph(inp, out, sess):
             if not os.path.isdir('./tmp'):
                 os.makedirs('./tmp')
             if os.path.isfile("./tmp/checkpoint"):
-                sess = tf.Session()
                 # Restore variables from disk.
                 saver.restore(sess, "./tmp/model.ckpt")
-                print("Model restored.")
+                print("Model restored. You don't have time to read this.")
 
         #print our where wer are after saving where we are        
         print("TIMESTEP", t, "/ EPSILON", epsilon, "/ ACTION", maxIndex, "/ REWARD", reward_t, "/ Q_MAX %e" % np.max(out_t))
